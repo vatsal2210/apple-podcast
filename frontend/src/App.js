@@ -12,7 +12,7 @@ function App() {
     setError(null);
 
     try {
-      const response = await fetch("/api/scrape-podcast", {
+      const response = await fetch("http://localhost:5001/api/scrape-podcast", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -21,6 +21,8 @@ function App() {
       });
 
       const data = await response.json();
+
+      console.log(data)
 
       if (response.ok) {
         setPodcastData(data);
