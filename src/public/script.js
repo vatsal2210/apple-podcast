@@ -88,7 +88,7 @@ document.getElementById("podcastForm").addEventListener("submit", async (e) => {
           navigator.clipboard.writeText(url).then(() => {
             button.innerHTML = '<i class="bi bi-check"></i> Copied!';
             setTimeout(() => {
-              button.innerHTML = '<i class="bi bi-clipboard"></i> Copy Link';
+              button.innerHTML = '<i class="bi bi-clipboard"></i>';
             }, 2000);
           });
         });

@@ -17,8 +17,11 @@ export interface IEpisode {
   feedImage: string;
   feedItunesId: number;
   feedLanguage: string;
-  chaptersUrl: string | null;
-  transcriptUrl: string | null;
+  transcripts: Array<{
+    url: string;
+    type: 'srt' | 'vtt' | 'text';
+    language: string;
+  }>;
   persons: Array<{
     id: number;
     name: string;
@@ -46,8 +49,16 @@ export const EpisodeSchema: Schema = new Schema({
   feedImage: String,
   feedItunesId: Number,
   feedLanguage: String,
-  chaptersUrl: String,
-  transcriptUrl: String,
+  transcripts: [
+    {
+      url: String,
+      type: {
+        type: String,
+        enum: ['srt', 'vtt', 'text'],
+      },
+      language: String,
+    },
+  ],
   persons: [
     {
       id: Number,

@@ -68,8 +68,7 @@ const getPodcastMetadata = async (
       feedImage: podcast.image,
       feedItunesId: podcast.itunesId,
       feedLanguage: podcast.language,
-      chaptersUrl: item["podcast:chapters"]?.$.url || null,
-      transcriptUrl: item["podcast:transcript"]?.$.url || null,
+      transcripts: parseTranscripts(item["podcast:transcript"]),
       persons: parsePersons(item["podcast:person"]),
     }));
 
@@ -118,6 +117,24 @@ const parsePersons = (
     group: person.$.group || "",
     href: person.$.href || "",
     img: person.$.img || "",
+  }));
+};
+
+const parseTranscripts = (
+  transcripts: any
+): Array<{
+  url: string;
+  type: 'srt' | 'vtt' | 'text';
+  language: string;
+}> => {
+  if (!transcripts) return [];
+
+  const transcriptArray = Array.isArray(transcripts) ? transcripts : [transcripts];
+  return transcriptArray.map((transcript: any) => ({
+    url: transcript.$.url,
+    type: transcript.$.type === 'application/srt' ? 'srt' :
+          transcript.$.type === 'text/vtt' ? 'vtt' : 'text',
+    language: transcript.$.language,
   }));
 };
 
